@@ -1,0 +1,14 @@
+{
+  "name": "echofind-control",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node --test worker.test.mjs",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": { "three": "0.180.0" },
+  "devDependencies": { "wrangler": "4.147.0" }
+}

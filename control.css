@@ -1,0 +1,44 @@
+/* Control page only; keep sidebar navigation available without the topbar. */
+@media (min-width: 761px) and (max-width: 1100px) {
+  body[data-page="control"] .control-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  body[data-page="control"] .sidebar { transform: none; width: 170px; padding: 24px 10px 16px; box-shadow: none; }
+  body[data-page="control"] .main { margin-left: 170px; }
+  body[data-page="control"] .brand { gap: 8px; padding: 0 5px; }
+  body[data-page="control"] .brand img { width: 32px; height: 32px; }
+  body[data-page="control"] .brand > span { font-size: 18px; }
+  body[data-page="control"] .brand small { font-size: 8px; letter-spacing: 1px; }
+  body[data-page="control"] .workspace { gap: 6px; padding: 10px 7px; }
+  body[data-page="control"] .workspace strong { font-size: 9px; }
+  body[data-page="control"] .workspace small { font-size: 7px; }
+  body[data-page="control"] .workspace .icon { display: none; }
+  body[data-page="control"] .nav-item { gap: 9px; padding: 0 10px; font-size: 11px; }
+  body[data-page="control"] .nav-end { font-size: 8px; }
+  body[data-page="control"] .sidebar-note { padding: 14px 10px; }
+  body[data-page="control"] .sidebar-note strong { font-size: 11px; }
+  body[data-page="control"] .sidebar-note p { font-size: 10px; }
+  body[data-page="control"] .note-chip { font-size: 7px; }
+  body[data-page="control"] .sidebar-bottom { gap: 7px; }
+  body[data-page="control"] .sidebar-bottom strong { font-size: 10px; }
+  body[data-page="control"] .sidebar-bottom small { font-size: 8px; }
+}
+
+@media (max-width: 760px) {
+  body[data-page="control"] .page-content { padding: 24px 16px; }
+  body[data-page="control"] .control-panel { grid-template-columns: 1fr; }
+  body[data-page="control"] .page-heading { flex-wrap: wrap; }
+  body[data-page="control"] .viewport-heading .subtle,
+  body[data-page="control"] .viewport-bottom > span:last-child { display: none; }
+  body[data-page="control"] .viewport-bottom { justify-content: center; padding: 0 8px; }
+  body[data-page="control"] .viewport-heading { padding: 0 10px; }
+  body[data-page="control"] .viewport-heading > div { gap: 6px; }
+  body[data-page="control"] .view-presets button { padding: 6px 10px; }
+  body[data-page="control"] .page-footer { flex-wrap: wrap; gap: 8px; }
+}
+
+/* Signal layer: compact status and hover details, no changes to the Blender model. */
+.signal-status { position:absolute;z-index:4;left:20px;top:110px;max-width:calc(100% - 40px);padding:8px 11px;border:1px solid #e5ddd6;border-radius:8px;background:rgba(255,255,255,.92);color:#776d65;font-size:10px;pointer-events:none; }
+.signal-status[data-state="live"] { color:#8c3434; }
+.signal-status[data-state="error"] { color:#a46b25; }
+.signal-tooltip { position:absolute;z-index:8;pointer-events:none;width:225px;padding:11px 12px;border:1px solid #ead8d8;border-radius:9px;background:rgba(255,255,255,.96);color:#684444;white-space:pre-line;font-size:10px;line-height:1.8;box-shadow:0 8px 24px #00000012; }
