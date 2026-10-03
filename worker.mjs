@@ -103,8 +103,10 @@ export function createWorker({fetcher=(...args)=>fetch(...args),now=()=>Date.now
   if(!ROUTES.has(pathname))throw new PublicError(404,'接口不存在。');
   const ip=request.headers.get('CF-Connecting-IP')||'local';
   if(request.method!=='GET')originCheck(request);
-  if(pathname==='/api/session' && request.method==='GET')return json({authenticated:Boolean(session(request,env,now)),passwordRequired:true});
+  const publicDemo = env.PUBLIC_DEMO === 'true';
+  if(pathname==='/api/session' && request.method==='GET')return json({authenticated:publicDemo || Boolean(session(request,env,now)),passwordRequired:!publicDemo});
   if(pathname==='/api/login' && request.method==='POST'){
+   if(publicDemo)throw new PublicError(404,'公开演示无需登录。');
    // Per-isolate defense; optional platform limiter strengthens distributed protection.
    if(env.LOGIN_RATE_LIMITER){const result=await env.LOGIN_RATE_LIMITER.limit({key:ip});if(!result.success)throw new PublicError(429,'登录尝试过多，请稍后再试。');}
    limit('login:'+ip,8,600000);
@@ -115,7 +117,7 @@ export function createWorker({fetcher=(...args)=>fetch(...args),now=()=>Date.now
    return json({ok:true},200,{'Set-Cookie':`${COOKIE}=${unsigned}.${sign(unsigned,env)}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=${LIFETIME}`});
   }
   if(pathname==='/api/session' && request.method==='DELETE')return json({ok:true},200,{'Set-Cookie':`${COOKIE}=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0`});
-  const identity=session(request,env,now);
+  const identity=publicDemo ? 'public-ip:'+ip : session(request,env,now);
   if(!identity)throw new PublicError(401,'请先输入访问密码。');
   limit('data:'+identity,100,60000);
   if(pathname==='/api/room-items' && request.method==='GET'){

@@ -13,5 +13,5 @@
     "html_handling": "none",
     "not_found_handling": "none"
   },
-  "vars": { "FEISHU_DEFAULT_STATION": "LeftUpper" }
+  "vars": { "FEISHU_DEFAULT_STATION": "LeftUpper", "PUBLIC_DEMO": "true" }
 }
